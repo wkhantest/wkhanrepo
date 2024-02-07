@@ -13,7 +13,7 @@ steps:
   inputs:
     command: 'restore'
     feedsToUse: 'select'
-    projects: 'newapptestwk'
+    projects: '**/newapptestwk.csproj'
     vstsFeed: 'my-vsts-feed'
 
 - task: DotNetCoreCLI@2
