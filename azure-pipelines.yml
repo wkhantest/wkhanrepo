@@ -9,12 +9,11 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
-    displayName: restore
-    inputs:
-      command: 'restore'
-      projects:  'newapptestwk.csproj'
-      feedsToUse: 'select'
-      vstsFeed: 'my-vsts-feed'
+  displayName: 'Restore'
+  inputs:
+    command: 'restore'
+    projects: '**/newapptestwk.csproj'
+    feedsToUse: 'config'
       
 - task: DotNetCoreCLI@2
   displayName: 'Build'
