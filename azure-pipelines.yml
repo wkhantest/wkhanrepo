@@ -8,31 +8,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Restore'
-  inputs:
-    command: 'restore'
-    feedsToUse: 'select'
-    projects: '*wkhantest/wkhanrepo.csproj'
-    vstsFeed: 'my-vsts-feed'
+-task: CopyFiles@2
+input:
+SourceFolder: '$(System.DefaultWorkingDirectory)'
+Content 'index.html;script.js;style.css'
+TargetFolder: '$(Build.ArtifactStagingDirectory)'
+displayName: 'Copy the files'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publish'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true
-
-- task: PublishPipelineArtifact@1
-  displayName: 'Upload'
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'TestApp2'
+-task: PublishBuildArtifacts@1
+inputs:
+  pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+  artifactName: 'drop'
+  publishLocation: 'Container'
+  displayName: 'publish the artifact'
